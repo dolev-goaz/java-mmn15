@@ -14,7 +14,7 @@ public class Main {
     }
 
     private static int getPositiveNumber(String message) {
-        System.out.print(message);
+        System.out.print(message + " ");
         Scanner s = new Scanner(System.in);
         Integer out;
         while (true) {

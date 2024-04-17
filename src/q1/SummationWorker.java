@@ -8,14 +8,11 @@ public class SummationWorker extends Thread {
     }
 
     private int[] safeGetItems() {
-        int[] items;
         try {
-            items = manager.getAndRemove();
+            return manager.getAndRemove();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Done");
             return null;
         }
-        return items;
     }
 
     @Override

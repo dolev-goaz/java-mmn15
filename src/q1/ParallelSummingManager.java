@@ -37,7 +37,7 @@ public class ParallelSummingManager {
         int count = Math.min(BATCH_COUNT, pool.size());
         int[] out = new int[count];
         for (int i = 0; i < count; i++) {
-            out[i] = pool.remove(0);
+            out[i] = pool.remove(pool.size() - 1);
         }
         return out;
     }
