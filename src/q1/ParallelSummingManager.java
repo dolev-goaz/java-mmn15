@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ParallelSummingManager {
     private static final int BATCH_COUNT = 2;
@@ -24,7 +25,9 @@ public class ParallelSummingManager {
             executor.execute(new SummationWorker(this));
         }
         executor.shutdown();
-        while (!executor.isTerminated()) {} // wait for it to finish
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) { }
 
         return pool.get(0);
     }
