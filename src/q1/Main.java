@@ -1,5 +1,6 @@
 package q1;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,18 +15,19 @@ public class Main {
     }
 
     private static int getPositiveNumber(String message) {
-        System.out.print(message + " ");
         Scanner s = new Scanner(System.in);
-        Integer out;
+        int out;
         while (true) {
+            System.out.print(message + " ");
             try {
                 out = s.nextInt();
                 if (out > 0) {
                     return out;
                 }
-                System.out.println("Please enter a positive number");
-            } catch (Exception e) {
-                System.out.println("Please enter a numeric value");
+                System.out.println("Please enter a positive number!");
+            } catch (InputMismatchException e) {
+                s.nextLine(); // clear buffer
+                System.out.println("Please enter a numeric value!");
             }
         }
     }
