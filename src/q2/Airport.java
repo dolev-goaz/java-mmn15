@@ -23,7 +23,6 @@ public class Airport {
     }
 
     public int land(int flightNo) {
-        locks[0].
         return -1;
     }
 
