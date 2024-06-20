@@ -14,6 +14,7 @@ public class Main {
         System.out.println(parallelSumming.parallelSum());
     }
 
+    // receive number input from the user
     private static int getPositiveNumber(String message) {
         Scanner s = new Scanner(System.in);
         int out;

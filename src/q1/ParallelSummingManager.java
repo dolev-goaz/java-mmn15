@@ -7,12 +7,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+// class representing a manager for parallel summing
 public class ParallelSummingManager {
+
+    // amount returned for each summation
     private static final int BATCH_COUNT = 2;
 
     private final int threadCount;
-    private ExecutorService executor;
-    private List<Integer> pool;
+    private final ExecutorService executor;
+    private final List<Integer> pool;
+
+    // constructor
     public ParallelSummingManager(Integer[] dataSet, int threadCount) {
         this.threadCount = threadCount;
         executor = Executors.newFixedThreadPool(threadCount);
@@ -20,6 +25,7 @@ public class ParallelSummingManager {
         Collections.addAll(pool, dataSet);
     }
 
+    // create all the summation workers to run in parallel
     public int parallelSum() {
         for (int i = 0; i < threadCount; i++) {
             executor.execute(new SummationWorker(this));
@@ -27,14 +33,17 @@ public class ParallelSummingManager {
         executor.shutdown();
         try {
             executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        } catch (InterruptedException e) { }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return pool.get(0);
     }
 
+    // returns a batch from the pool to a summation worker
     public synchronized int[] getAndRemove() {
         if (pool.size() <= 1) {
-            // nothing to sum
+            // nothing to sum- only the result(at most) remains in the pool
             throw new IndexOutOfBoundsException();
         }
         int count = Math.min(BATCH_COUNT, pool.size());
@@ -44,6 +53,8 @@ public class ParallelSummingManager {
         }
         return out;
     }
+
+    // adds an item back to the pool
     public synchronized void add(int item) {
         pool.add(item);
     }
