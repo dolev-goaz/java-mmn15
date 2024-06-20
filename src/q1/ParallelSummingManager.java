@@ -19,7 +19,7 @@ public class ParallelSummingManager {
     // constructor
     public ParallelSummingManager(Integer[] dataSet, int threadCount) {
         executor = Executors.newFixedThreadPool(threadCount);
-        pool = new ArrayList<>();
+        pool = new ArrayList<Integer>();
         Collections.addAll(pool, dataSet);
     }
 
